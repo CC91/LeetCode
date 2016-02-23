@@ -1,8 +1,8 @@
 // 295. Find Median from Data Stream
 
 class MedianFinder {
-private:
-    priority_queue<int> small, large;
+private: 
+    priority_queue<int> small, large; // small keeps first half of sorted array, large keeps second half, size of small>=large (odd, even)
 public:
 
     // Adds a number into the data structure.
