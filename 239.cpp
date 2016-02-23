@@ -1,7 +1,7 @@
 // 239. Sliding Window Maximum
 
 class Solution {
-public:
+public: // http://www.cnblogs.com/grandyang/p/4656517.html
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         vector<int> res;
         deque<int> q;
