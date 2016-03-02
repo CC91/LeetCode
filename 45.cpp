@@ -3,11 +3,13 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int i = 0, curMax = 0, lastMax = 0, res = 0;
-        while (curMax<nums.size()-1) {
-            lastMax = curMax;
-            for (; i<=lastMax; i++) curMax = max(curMax, nums[i]+i);
-            res++;
+        int last = 0, cur = 0, res = 0, n = nums.size(); // cur is the furthest position can reach
+        for (int i=0; i<n; i++) {
+            if (i>last) { // last is the max distance that has been reached
+                last = cur;
+                res++;
+            }
+            cur = max(cur, nums[i]+i);
         }
         return res;
     }
