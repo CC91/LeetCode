@@ -10,31 +10,20 @@
  * };
  */
 class Solution {
-public:
+public: // 3 cases: newI<intervals (a), newI overlap with intervals (b), newI after intervals (c)
     vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
         vector<Interval> res;
-        bool isInsert = false;
-        for (int i=0; i<intervals.size(); i++) {
-            if (isInsert) {
-                res.push_back(intervals[i]);
-                continue;
+        auto it = intervals.begin();
+        for (; it!=intervals.end(); it++) {
+            if (newInterval.end<(*it).start) break; // case a
+            else if (newInterval.start>(*it).end) res.push_back(*it); // case c
+            else {
+                newInterval.start = min(newInterval.start, (*it).start); // case b
+                newInterval.end = max(newInterval.end, (*it).end);
             }
-            
-            if (newInterval.end < intervals[i].start) {
-                res.push_back(newInterval);
-                res.push_back(intervals[i]);
-                isInsert = true;
-                continue;
-            }
-            
-            if (newInterval.start <= intervals[i].end && intervals[i].start <= newInterval.end) {
-                newInterval.start = min(newInterval.start, intervals[i].start);
-                newInterval.end = max(newInterval.end, intervals[i].end);
-                continue;
-            }
-            res.push_back(intervals[i]);
         }
-        if (!isInsert) res.push_back(newInterval);
+        res.push_back(newInterval);
+        for (; it!=intervals.end(); it++) res.push_back(*it);
         return res;
     }
 };
