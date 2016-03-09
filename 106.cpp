@@ -12,7 +12,6 @@
 class Solution {
 public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        if (inorder.size()!=postorder.size()) return NULL;
         return dfs(inorder, postorder, 0, inorder.size()-1, 0, postorder.size()-1);
     }
     
@@ -28,7 +27,7 @@ public:
         }
         int l = rootIdx-s1, r = e1-rootIdx;
         root->left = dfs(inorder, postorder, s1, rootIdx-1, s2, s2+l-1);
-        root->right = dfs(inorder, postorder, rootIdx+1, e1, e2-r, e2-1);
+        root->right = dfs(inorder, postorder, rootIdx+1, e1, s2+l, e2-1); // or root->right = dfs(inorder, postorder, rootIdx+1, e1, e2-r, e2-1);
         return root;
     }
 };
