@@ -4,12 +4,12 @@ class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
         int n = s.size();
-        int slow = 0, fast = 0, Max = 0;
+        int slow = 0, fast = 0, res = 0;
         bool visited[256] = {false};
-        while(fast<n) {
+        while (fast<n) {
             if (visited[s[fast]]) {
-                Max = max(Max, fast-slow);
-                while (s[slow] != s[fast]) {
+                res = max(res, fast-slow);
+                while (s[slow]!=s[fast]) {
                     visited[s[slow]] = false;
                     slow++;
                 }
@@ -21,8 +21,23 @@ public:
                 fast++;
             }
         }
-        Max = max(Max, n-slow);
-        return Max;
+        res = max(res, n-slow);
+        return res;
     }
 };
 
+
+class Solution {
+public: // hash map
+    int lengthOfLongestSubstring(string s) {
+        int l = 0, r = 0, res = 0;
+        unordered_map<char, int> m;
+        while (r<s.size()) {
+            if (m.count(s[r])) l = max(l, m[s[r]]+1);
+            m[s[r]] = r;
+            res = max(res, r-l+1);
+            r++;
+        }
+        return res;
+    }
+};
