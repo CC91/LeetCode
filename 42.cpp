@@ -40,3 +40,25 @@ public: // 2 pointers represent the left height and right height of any position
         return res;
     }
 };
+
+
+class Solution {
+public: // find hightest bar, compute area from left for 1st half and from right for the 2nd half.
+    int trap(vector<int>& height) {
+        int n = height.size(), res = 0;
+        if (n<3) return res;
+        int m = 0;
+        for (int i=1; i<n; i++) {
+            if (height[i]>height[m]) m = i;
+        }
+        for (int i=0, top=0; i<m; i++) {
+            if (height[i]>top) top = height[i];
+            else res += top-height[i];
+        }
+        for (int i=n-1, top=0; i>m; i--) {
+            if (height[i]>top) top = height[i];
+            else res += top-height[i];
+        }
+        return res;
+    }
+};
