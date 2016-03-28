@@ -12,3 +12,12 @@ public: // dp: f(n) = f(n-1)+f(n-2), need 2 previous variables only
         return f2;
     }
 };
+
+
+class Solution {
+public:// math O(1) time and space
+    int climbStairs(int n) {
+        double t = sqrt(5);
+        return floor((pow((1+t)/2, n+1)-pow((1-t)/2, n+1))/t); // since the sequence starts from a0
+    }
+};
