@@ -1,39 +1,30 @@
 // 76. Minimum Window Substring
 
 class Solution {
-public:
+public: // 2 pointers with hash table
     string minWindow(string s, string t) {
-        if (s.empty() ||s.size()<t.size()) return "";
+        if (s.empty() ||t.empty()) return "";
         unordered_map<char, int> m;
-        for (char c:t) {
-            if (m.count(c)) m[c]++;
-            else m[c]=1;
-        }
-        
-        int left =0,  right = 0;
-        int len = s.size()+1;
-        int cnt = 0;
-        int minLeft = -1;
-        
-        while (right<s.size()) {
-            char curC = s[right];
-            if (m.count(curC)) {
-                if (m[curC]-->0) cnt++;
+        for (char c:t) m[c]++;
+        int i = 0, j = 0, pos = -1, cnt = 0, len = s.size()+1; // i is the left boundary, j is the right boundary
+        while (j<s.size()) {
+            if (m.count(s[j])) {
+                if (m[s[j]]-->0) cnt++;
             }
-            //m[curC]--;
             while (cnt==t.size()) {
-                if (len>right-left+1) {
-                    len = right-left+1;
-                    minLeft = left;
+                if (len>j-i+1) {
+                    len = j-i+1;
+                    pos = i; 
                 }
-                char leftC = s[left++];
-                if (m.count(leftC)) {
-                    m[leftC]++;
-                    if (m[leftC]>0) cnt--;
+                char c = s[i++];
+                if (m.count(c)) {
+                    m[c]++;
+                    if (m[c]>0) cnt--;
                 }
+                
             }
-            right++;
+            j++;
         }
-        return minLeft==-1?"":s.substr(minLeft, len);
+        return pos==-1?"":s.substr(pos, len);
     }
 };
