@@ -1,18 +1,17 @@
-// 202. Happy Number
+// 202. Happy Number 
 
 class Solution {
-public:
+public: // set
     bool isHappy(int n) {
-        set<int> m;
-        while (n!=1) {
+        set<int> s;
+        while (n!=1 && !s.count(n)) {
+            s.insert(n);
             int sum = 0;
-            while (n>0) {
+            while (n) {
                 sum += (n%10)*(n%10);
                 n /= 10;
             }
             n = sum;
-            if (m.count(n)) break;
-            else m.insert(n);
         }
         return n==1;
     }
@@ -20,18 +19,18 @@ public:
 
 
 class Solution {
-public:
+public: // hashmap
     bool isHappy(int n) {
         unordered_map<int, int> m;
         while (n!=1) {
             int sum = 0;
-            while (n>0) {
+            while (n) {
                 sum += (n%10)*(n%10);
                 n /= 10;
             }
             n = sum;
             if (m.count(n)) break;
-            else m[n] = 0;
+            else m[n] = 1;
         }
         return n==1;
     }
