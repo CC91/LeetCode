@@ -31,3 +31,27 @@ public:
         return i;
     }
 };
+
+
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        return distance(nums.begin(), remove(nums.begin(), nums.end(), val)); // remove func returns the new end after removing the element
+    }
+};
+
+
+class Solution {
+public: // 2 pointers
+    int removeElement(vector<int>& nums, int val) {
+        int i = 0, j = 0;
+        while (j<nums.size()) {
+            if (nums[j]!=val) {
+                nums[i] = nums[j];
+                i++;
+            }
+            j++;
+        }
+        return i;
+    }
+};
