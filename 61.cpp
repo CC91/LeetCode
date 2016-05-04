@@ -28,3 +28,31 @@ public: // get list length, k maybe > length
         return head;
     }
 };
+
+
+class Solution {
+public: // 2 pointers
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (!head ||!head->next ||!k) return head;
+        int len = 1;
+        ListNode *p = head, *slow = head, *fast = head;
+        while (p->next) {
+            len++;
+            p = p->next;
+        }
+        k = k%len; // if k==len, there would be no rotation
+        while (k--) {
+            fast = fast->next;
+        }
+        if (!fast ||fast==head) return head; // when k==0, fast==NULL
+        while (fast->next) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        ListNode *newHead = slow->next;
+        fast->next = head;
+        slow->next = NULL;
+        return newHead;
+    }
+};
+
