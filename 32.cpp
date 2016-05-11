@@ -1,21 +1,46 @@
-// 32. Longest Valid Parentheses
+// 32. Longest Valid Parentheses 
 
 class Solution {
-public:
+public: // stack
     int longestValidParentheses(string s) {
-        const char* str = s.c_str();
-        const char *p = str;
-        vector<const char*> stk;
-        long res = 0;
-        while (*p!='\0') {
-            if (*p=='(') stk.push_back(p);
-            else {
-                if (!stk.empty() && *stk.back()=='(') {
-                    stk.pop_back();
-                    res = max(res, p-(stk.empty()?str-1:stk.back()));
-                } else stk.push_back(p);
+        int res = 0;
+        stack<int> stk; // store potential invalid indices
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == ')' && !stk.empty() && s[stk.top()] == '(') {
+                stk.pop();
+                if (stk.empty()) {
+                    res = i + 1;
+                } else {
+                    res = max(res, i - stk.top());
+                }
+            } else {
+                stk.push(i);
             }
-            p++;
+        }
+        return res;
+    }
+};
+
+
+class Solution {
+public: // DP
+    int longestValidParentheses(string s) {
+        int res = 0;
+        int n = s.size();
+        vector<int> dp(n, 0);
+        for (int i = n-2; i >= 0; i--) {
+            if (s[i] == ')') {
+                dp[i] = 0;
+            } else {
+                int j = i + dp[i+1] + 1;
+                if (j < n && s[j] == ')') {
+                    dp[i] = dp[i+1] + 2;
+                    if (j + 1 < n) {
+                        dp[i] += dp[j+1];
+                    }
+                }
+            }
+            res = max(res, dp[i]);
         }
         return res;
     }
