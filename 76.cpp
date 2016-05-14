@@ -1,30 +1,26 @@
-// 76. Minimum Window Substring
+// 76. Minimum Window Substring 
 
 class Solution {
-public: // 2 pointers with hash table
+public:
     string minWindow(string s, string t) {
-        if (s.empty() ||t.empty()) return "";
+        if (s.empty() || t.empty()) return "";
+        int start = 0;
+        int end = 0;
+        int pos = -1;
+        int len = s.size() + 1;
+        int cnt = 0;
         unordered_map<char, int> m;
-        for (char c:t) m[c]++;
-        int i = 0, j = 0, pos = -1, cnt = 0, len = s.size()+1; // i is the left boundary, j is the right boundary
-        while (j<s.size()) {
-            if (m.count(s[j])) {
-                if (m[s[j]]-->0) cnt++;
-            }
-            while (cnt==t.size()) {
-                if (len>j-i+1) {
-                    len = j-i+1;
-                    pos = i; 
+        for (char c : t) m[c]++;
+        while (end < s.size()) {
+            if (m[s[end++]]-- > 0) cnt++;
+            while (cnt == t.size()) {
+                if (len > end - start) {
+                    len = end -start;
+                    pos = start;
                 }
-                char c = s[i++];
-                if (m.count(c)) {
-                    m[c]++;
-                    if (m[c]>0) cnt--;
-                }
-                
+                if (m[s[start++]]++ == 0) cnt--;
             }
-            j++;
         }
-        return pos==-1?"":s.substr(pos, len);
+        return pos == -1? "" : s.substr(pos, len);
     }
 };
