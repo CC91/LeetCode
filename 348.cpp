@@ -77,7 +77,7 @@ public:
  */
 
 
- class TicTacToe {
+class TicTacToe {
 private:
     vector<int> rows;
     vector<int> cols;
@@ -108,7 +108,8 @@ public:
         cols[col] += count;
         diagonal += (row == col) ? count : 0;
         anti_diagonal += (row == N - 1 - col) ? count : 0;
-        return (abs(rows[row]) == N || abs(cols[col]) == N || abs(diagonal) == N || abs(anti_diagonal) == N) ? player : 0;
+        return (abs(rows[row]) == N || abs(cols[col]) == N 
+            || abs(diagonal) == N || abs(anti_diagonal) == N) ? player : 0;
     }
 };
 
