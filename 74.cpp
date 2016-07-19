@@ -2,7 +2,7 @@
 
 class Solution {
 public: // binary search, O(logmn) time 
-// m*n matrix convert to an array: matrix[x][y]=>a[x*n+y], an array convert to m*n matrix=>a[x]: matrix[x/n][x%m];
+// m*n matrix convert to an array: matrix[x][y]=>a[x*n+y], an array convert to m*n matrix=>a[x]: matrix[x/n][x%n];
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
         if (matrix.empty()) return false;
         int m = matrix.size(), n = matrix[0].size();
